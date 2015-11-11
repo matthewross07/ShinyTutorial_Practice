@@ -20,7 +20,9 @@ This code reads in data from the Mud River Reservoir in West Virginia that drain
 library(EGRET)
 library(dataRetrieval)
 #First number is USGS station id. Second number is data code for water height.
-z <- readNWISDaily('03204250','00065')
+mudriver.height <- readNWISDaily('03204250','00065',startDate='2005-09-30',endDate='2015-10-01')
+# Read in a second site for comparison. 
+panther.q <- readNWISDaily('03213500','00060',startDate='2005-09-30',endDate='2015-10-01')
 ```
 
 Oooh, look at all those warnings! For now we will keep them, but there are ways to supress them if you want a cleaner document.   
@@ -32,12 +34,21 @@ Now that we have data we need to convert the timestamps into a useful format usi
 
 ```{r}
 library(lubridate)
+# For brevity turn mud river height into z
+z <- mudriver.height
 #Convert timestamp to a format that R can read.
 #Lubridate can handle all kinds of formats but in this case it is in year month day. TZ is for timezone designation. 
 z$lubridate <- ymd(z$Date,tz='Etc/GMT-5')
+panther.q$lubridate <- ymd(panther.q$Date,tz='Etc/GMT-5')
 
 #Convert level data into meters
 z$meter <- z$Q*.3048
+
+#Merge datasets based on day.
+all.dat <- merge(z[,c('meter','lubridate')],panther.q[,c('Q','lubridate')],by='lubridate',all.y=T)
+#Rename columns
+names(all.dat) <- c('lubridate','Mud.Level.M','Panther.cfs')
+all.dat$Panther.cms <- all.dat$Panther.cfs*0.0283168
 #Setup plot parameters
 par(mfrow=c(2,1),cex=1,mar=c(4,4,2,0))
 #Highlight days we sampled water chemistry.
@@ -120,6 +131,20 @@ dy.mud %>% dyOptions(useDataTimezone=T,colors=c('blue','red'), drawPoints=T) %>%
   # Add 99.9% quantile line
   dyLimit(as.numeric(q.99.9),color='green',label='99.9% Quantile')
 
+#Wow that's great. What if we wanted to compare across sites. Dygraphs works for that too!
+
+comp.xts <- xts(cbind(Mud.Level=all.dat$Mud.Level.M,Panther.Q.cms=all.dat$Panther.cms),order.by=all.dat$lubridate)
+
+dygraph(comp.xts) 
+#But that looks terrible because of different axes (m vs m3/s)
+#One way to fix that is by adding two axes
+dygraph(comp.xts) %>%
+  dySeries('Panther.Q.cms',axis='y2')
+
+#But I still don't like that, so maybe two linked graphs is better?
+
+dygraph(comp.xts$Panther.Q.cms,main='Panther Creek',group='comp.xts') 
+dygraph(comp.xts$Mud.Level,main='Mud River',group='comp.xts')
 ```
 
 Ok that's enough packages for now. Eventually I'll add some geospatial stuff here. 
