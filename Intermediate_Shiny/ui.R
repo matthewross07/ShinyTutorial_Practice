@@ -1,6 +1,8 @@
 
 
 library(dygraphs)
+load('MegaWideOct2015.RData')
+mega.merge <- z
 
 shinyUI(fluidPage(
   
