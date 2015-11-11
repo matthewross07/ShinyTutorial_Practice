@@ -8,11 +8,14 @@ output: html_document
 This is an RMarkdown version of the Useful.Packags.For.Shiny.Apps.R script. Hopefully it shows how R Markdown is a great way to structure code that will be shared or requires lots of commenting. Let's get started.
 
 ##Packages
-R is all about packages. Finding, using, and understanding the best ones can make coding incredibly efficient and fast. These are my favorite ones for Shiny apps.  From here on I'll highlight the package names and then after will be a First we need to get some data to use as an example using a great package from the USGS
-##EGRET
-##dataRetrieval
+R is all about packages. Finding, using, and understanding the best ones can make coding incredibly efficient and fast. These are my favorite ones for Shiny apps.  From here on I'll highlight the package names and then after will be a First we need to get some data to use as an example using a great package from the USGS  
 
-Reads in data from the Mud River Reservoir in West Virginia that drains my research catchments. USGS code '03204250' 
+[**EGRET**](http://pubs.usgs.gov/tm/04/a10/)  
+
+[**dataRetrieval**](https://github.com/USGS-R/dataRetrieval)
+
+
+This code reads in data from the Mud River Reservoir in West Virginia that drains my research catchments. USGS code '03204250' 
 ```{r}
 library(EGRET)
 library(dataRetrieval)
@@ -20,10 +23,13 @@ library(dataRetrieval)
 z <- readNWISDaily('03204250','00065')
 ```
 
-Oooh, look at all those warnings! For now we will keep them, but there are ways to supress them if you want a cleaner document. 
-Now that we have data we need to convert the timestamps into a useful format using a package from the great Hadley Wickham.
+Oooh, look at all those warnings! For now we will keep them, but there are ways to supress them if you want a cleaner document.   
 
-##lubridate
+
+Now that we have data we need to convert the timestamps into a useful format using a package from the great Hadley Wickham.  
+
+[**lubridate**](https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html)  
+
 ```{r}
 library(lubridate)
 #Convert timestamp to a format that R can read.
@@ -63,11 +69,13 @@ points(smpl$lubridate,smpl$meter, col='red',pch=19,cex=1)
 
 ```
 
-So now we have a baseplot that highlights water level at the mud river reservoir, and this data has some nice timestamps on the x-axis and can be broken down into intervals with **lubridate**.  but it is kind of static and ugly, so maybe we can make it better with other packages. 
+So now we have a baseplot that highlights water level at the mud river reservoir, and this data has some nice timestamps on the x-axis and can be broken down into intervals with **lubridate**.  but it is kind of static and ugly, so maybe we can make it better with other packages.  
 
 
-##xts
-##dygraphs
+[**xts**](http://www.noamross.net/blog/2013/2/6/xtsmarkdown.html)  
+
+[**dygraphs**](https://rstudio.github.io/dygraphs/index.html)  
+
 
 ```{r}
 library(xts) # A library to deal with time series data.
@@ -85,11 +93,13 @@ z.xts <- xts(cbind(MudRiverRes_m = z$meter,Sample_Days = z$Smpl.m),order.by=z$lu
 ```
 
 
-Ok so there is an interactive graph of our data, but it also is kind of ugly and doesn't have all the data we want to see. Time for another package. This is one of my favorites called "magrittr" which is a play on words on Réné Magritte who has a famous painting with the label "ceci n'est pas une pipe." Here it is. ![The Treachery of Images.](MagrittePipe.jpg)
+Ok so there is an interactive graph of our data, but it also is kind of ugly and doesn't have all the data we want to see. Time for another package. This is one of my favorites called "magrittr" which is a play on words on Réné Magritte who has a famous painting with the label "ceci n'est pas une pipe." Here it is!  
 
-So magrittr is all about pipes!
+![The Treachery of Images.](MagrittePipe.jpg)
 
-##magrittr
+So magrittr is all about pipes!  
+
+[magrittr](http://blog.rstudio.org/2014/12/01/magrittr-1-5/)
 ```{r}
 library(magrittr)
 #One way to change options for dygraphs is to save them as an object like this.
