@@ -1,0 +1,65 @@
+---
+author: "Matthew Ross"
+bibliography: library.bib
+fontsize: 10pt
+output:
+  pdf_document:
+    fig_caption: yes
+    includes:
+      in_header: options.tex
+    latex_engine: xelatex
+  html_document: default
+---
+
+As humans have increasingly gained varying degrees of control over nearly all environmental processes, the potential for so-called, 'catastrophic shifts' in ecosystems has been a call to arms for environmental scientists and managers alike [@Scheffer2003]. The potential for these regime shifts indicates that cumulative anthropogenic changes to environmental factors like temperature or nutrient state could eventually lead to rapid shifts in ecosystem state once some critical threshold has been passed. When and where such regime shifts potentially occur is a vital question on its own for both resource managers and scientists, but the slight difference in language between 'regime shift' and 'catastrophic shift' indicates an important physical difference between ecosystem behavior that has strong implications for management. However, even when using both environmental data and models, it is often difficult to distinguish between these two types of ecosystem responses. For this paper, I will apply the conceptual framework presented by [@Scheffer2003] to evaluate the evidence for the existence of catastrophic shifts in coral reefs and savannas.
+
+  Here, I define regime shifts as a pure threshold behavior where the ecosystem state sharply transitions between two states once a critical threshold has been passed, but with no alternative stable states. Contrastingly a catastrophic shift implies that once the critical threshold is passed, the system goes into an alternative stable state that does not easily transition back to the original state, even with a return to previous environmental conditions (Figure 1). In the regime shift scenario the ecosystem can be returned to its prior state with a shift back to the original environmental conditions. In the catastrophic shift scenario, once the threshold has been passed, the ecosystem also reaches a new state, but it is resilient in that state. Thus, a return to original environmental conditions may not be enough to return the ecosystem to the alternate stable and desired state. This 'negative' resiliency, where an ecosystem persists in an undesirable state is what makes catastrophic shifts much more difficult to manage than regime shifts, which themselves are often difficult to address, and provides motivation for scientist to identify systems that may have this property. 
+  
+```{r, fig.width=5,fig.height=2,echo=FALSE,fig.cap='Difference between regime shift and catastrophic shift where the red line indicates some undesirable ecosystem state (for example, macroalgae taking over a coral bed). '}
+par(mfrow=c(1,2),mgp=c(1,1,0),mar=c(5,2,3,1),cex=0.8)
+x1 <- seq(-10,10,length.out=1000)
+y1 <- 1/(1+exp(-x1*10))
+plot(x1,rev(y1), xaxt='n',yaxt='n', xlab='Environmental Variable',ylab='Ecosystem State', type='l', lwd=3, main='Regime Shift')
+y2 <- c(0,0)
+x2 <- c(0.7,10)
+lines(x2,y2,col='red',lwd=4)
+
+x2 <- seq(-10,0,length.out=1000)
+y2 <- 100/(x2-10)
+plot(x2,y2, xlim=c(-10,10), ylim=c(-15,-5), type='l',lwd=3,xlab='Environmental Variable', ylab='',xaxt='n',yaxt='n',main='Catastrophic Shift')
+x <- c(0,-5)
+y <- c(-10,-11.5)
+lines(x,y,lty=2,lwd=3)
+x3 <- seq(-5,5,length.out=1000)
+y3 <- (5-rev(y2))
+par(new=TRUE)
+plot(x3,y3, col='red', xaxt='n',yaxt='n',xlab='',ylab='',xlim=c(-8,5),ylim=c(10,25), type='l',lwd=3)
+
+```
+
+  To distinguish between these two types of transitions there are a set of potential indicators that may signify the existence of alternative stable states, and therefore the potential for catastrophic shifts. These include [@Scheffer2003]:
+  
+* Observational Data
+    + Jumps in time series
+    + Multimodality of the frequency distribution of states
+    + Dual relationship to control factors
+* Experimental Data
+    + Disturbance trigger a shift to another permanent state
+    + Hysteresis in response to forward and backward changes in conditions
+* Model Inferences
+
+  Two systems where a combination of these approaches have been used in an effort to detect alternative stable states are coral reefs[@Mumby2007a; @Zk2012] and savannas[@Hirota2011;@Staver2011]. The results from these two different study systems provide a contrast in evidence for alternative stable states and highlight the difficulty in proving there existence in any given ecosystem
+  Using field data including jumps in time series and a disturbance trigger as a permanent state shift, Mumby and others [-@Mumby2007a] build an analytical model coupled with a simulation to suggest that Caribbean coral reefs do show alternative stable states. In their model the environmental variable controlling the transition of coral reefs to macroalgae is the grazing pressure from parrotfish and sea-urchins. Using their simulation the authors suggest that reefs can exhibit strong hysteresis and 'negative resilience,' once the macroalgae state is reached. However, their work is conducted along a single coral reef, so the model and analysis may be highly sensitive to site idiosyncrasies or changes in other environmental variables (like ocean acidity). Zychaluk and others [-@Zk2012] highlight the site-specific nature of this study by showing no evidence for a multimodal distribution of coral reef cover at a regional scale. While coral reefs may exhibit 'regime shifts,' without strong evidence for alternative stable states regional level variation in environmental factors may maintain large coral reefs well into the future [@Zk2012]. 
+  The ambiguity in coral reefs is sharply contrasted with the clear pictures painted by Hirota [-@Hirota2011] and Staver[-@Staver2011] who present strong evidence for alternative stable states in tree cover with a set of complimentary analyses including:
+  
+* Multimodality in frequency distributions of savanna versus forest [@Hirota2011; @Staver2011]
+* Evidence for jumps in time series [@Staver2011]
+* Dual relationship to control factors [@Hirota2011; @Staver2011]
+* Disturbance triggering a permanent change in state [@Staver2011]
+* Modeling approaches with positive feedbacks that reproduce alternative stable states [@Staver2011]
+
+Because these two separate teams provide strong evidence at local and continental scales for alternative stable states in forest-savanna transitions (right at the 60% tree cover mark), they can make probabilistic predictions about how resilient a savanna or forest ecosystem is to changes in fire regime and/or climate[@Hirota2011]. Given the strong evidence for catastrophic shifts, these predictions may be vital for forest/savanna management to prevent undesirable woody encroachment (savanna to forest) and/or forest loss (forest to savanna), because once the system reaches a new state, it may be very difficult to get it back. 
+  This kind of probabilistic modeling highlights the practical applications one can use when the evidence for alternative stable states is strongly supported by the methods outlined by [@Scheffer2003]. Catastrophic shifts in forest-savanna can be placed in a nearly universal predictive framework (at least in the tropics) that managers and policy makers can use to inform policy. However, without regional evidence for catastrophic shifts in coral reefs, such a universal policy may be less useful and overemphasize the potential for resilience in the macroalgae (negative) state. Using rigorous analyses and modeling to distinguish between regime shifts and catastrophic shifts in ecosystems has important practical and scientific implications for how we understand and manage the environment.  
+  
+#References
+
