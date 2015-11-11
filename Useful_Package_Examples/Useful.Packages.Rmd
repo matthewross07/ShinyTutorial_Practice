@@ -2,7 +2,7 @@
 title: "Useful.Pacakages.For.Shiny"
 author: "Matthew Ross"
 date: "November 11, 2015"
-output: pdf_document
+output: html_document
 ---
 
 This is an RMarkdown version of the Useful.Packags.For.Shiny.Apps.R script. Hopefully it shows how R Markdown is a great way to structure code that will be shared or requires lots of commenting. Let's get started.
